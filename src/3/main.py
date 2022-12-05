@@ -45,6 +45,14 @@ def parse_rucksack(rucksack):
 
     return 0
 
+def parse_rucksack_group(rucksack_group):
+
+    for index in range(0, len(rucksack_group[0])):
+        if rucksack_group[0][index] in rucksack_group[1] and rucksack_group[0][index] in rucksack_group[2]:
+            return get_priority_value(rucksack_group[0][index])
+
+    return 0
+
 def part_one():
     input_file = open('input.txt', 'r')
     lines = input_file.readlines()
@@ -57,4 +65,24 @@ def part_one():
 
     print('part one: ' + str(total_priority))
 
+def part_two():
+    input_file = open('input.txt', 'r')
+    lines = input_file.readlines()
+
+    total_priority = 0
+    rucksack_count = 0
+    rucksacks_to_parse = ['', '', '']
+
+    for line in lines:
+        rucksacks_to_parse[rucksack_count] = line.strip()
+        rucksack_count += 1
+
+        if rucksack_count == 3:
+            priority = parse_rucksack_group(rucksacks_to_parse)
+            total_priority += priority
+            rucksack_count = 0
+
+    print('part two: ' + str(total_priority))
+
 part_one()
+part_two()
